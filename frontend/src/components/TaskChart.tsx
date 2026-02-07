@@ -28,9 +28,9 @@ export default function TaskChart({ tasks }: Props) {
         </p>
       </CardHeader>
       <CardContent>
-        <div className="h-64 w-full">
+        <div className="h-64 w-full relative min-h-0 min-w-0">
           {total > 0 ? (
-            <ResponsiveContainer className="w-full h-full">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
               <PieChart>
                 <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
                   {data.map((entry, index) => (
