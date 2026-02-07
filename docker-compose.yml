@@ -1,0 +1,12 @@
+services:
+  db:
+    container_name: websocket-kanban-db
+    image: mongo:8.2.2
+    restart: unless-stopped
+    volumes:
+      - ${MONGO_DATA_PATH}:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"

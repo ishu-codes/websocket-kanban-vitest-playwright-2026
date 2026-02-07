@@ -1,0 +1,6 @@
+
+# Environment files
+.env
+
+# MongoDB volume
+mongo_data_volume/
