@@ -1,11 +1,11 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { test, expect, vi } from "vitest";
 
-import KanbanBoard from "../../components/KanbanBoard";
-import { useTaskStore } from "../../store/useTaskStore";
+import KanbanBoard from "@/components/KanbanBoard";
+import { useTaskStore } from "@/store/useTaskStore";
 
 // Mock the store
-vi.mock("../../store/useTaskStore", () => ({
+vi.mock("@/store/useTaskStore", () => ({
   useTaskStore: vi.fn(),
 }));
 
@@ -21,4 +21,15 @@ test("renders Kanban board title", () => {
   expect(screen.getByText("Kanban Board")).toBeInTheDocument();
 });
 
-// TODO: Add more unit tests for individual components
+test("renders columns when loaded", () => {
+  (useTaskStore as any).mockReturnValue({
+    tasks: [],
+    loading: false,
+    init: vi.fn(),
+  });
+
+  render(<KanbanBoard />);
+  expect(screen.getByText("To Do")).toBeInTheDocument();
+  expect(screen.getByText("In Progress")).toBeInTheDocument();
+  expect(screen.getByText("Done")).toBeInTheDocument();
+});

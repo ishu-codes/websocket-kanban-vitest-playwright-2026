@@ -1,25 +1,41 @@
 import { render, screen } from "@testing-library/react";
-import { test, expect, vi } from "vitest";
+import { expect, vi, describe, beforeEach, it } from "vitest";
 
-import KanbanBoard from "../../components/KanbanBoard";
-import { useTaskStore } from "../../store/useTaskStore";
+import KanbanBoard from "@/components/KanbanBoard";
+import { useTaskStore } from "@/store/useTaskStore";
 
 // Mock the store
-vi.mock("../../store/useTaskStore", () => ({
+vi.mock("@/store/useTaskStore", () => ({
   useTaskStore: vi.fn(),
 }));
 
-test("WebSocket receives task update", async () => {
-  (useTaskStore as any).mockReturnValue({
-    tasks: [],
-    isLoading: false,
-    init: vi.fn(),
-    moveTask: vi.fn(),
+describe("WebSocket Integration", () => {
+  const mockTasks = [{ _id: "1", title: "Task 1", status: "To Do", priority: "Low", category: "Bug" }];
+
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  render(<KanbanBoard />);
+  it("displays tasks synced from WebSocket", () => {
+    (useTaskStore as any).mockReturnValue({
+      tasks: mockTasks,
+      loading: false,
+      init: vi.fn(),
+    });
 
-  expect(screen.getByText("Kanban Board")).toBeInTheDocument();
+    render(<KanbanBoard />);
+    expect(screen.getByText("Task 1")).toBeInTheDocument();
+  });
+
+  it("shows correct task count in columns", () => {
+    (useTaskStore as any).mockReturnValue({
+      tasks: mockTasks,
+      loading: false,
+      init: vi.fn(),
+    });
+
+    render(<KanbanBoard />);
+    const todoCount = screen.getByText("1"); // Badge count for To Do
+    expect(todoCount).toBeInTheDocument();
+  });
 });
-
-// TODO: Add more integration tests
