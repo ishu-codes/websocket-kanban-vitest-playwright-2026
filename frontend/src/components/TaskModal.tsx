@@ -35,10 +35,10 @@ export default function TaskModal({ isOpen, onClose, task }: Props) {
   useEffect(() => {
     if (task) {
       setFormData({
-        _id: "",
+        _id: task._id || "",
         title: task.title || "",
         description: task.description || "",
-        status: "To Do",
+        status: task.status || "To Do",
         priority: task.priority || "Medium",
         category: task.category || "Feature",
         attachments: task.attachments || [],

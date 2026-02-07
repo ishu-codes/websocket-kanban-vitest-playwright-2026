@@ -22,6 +22,12 @@ export const useTaskStore = create<TaskStore>((set, _) => ({
   isLoading: true,
 
   init: () => {
+    // Remove existing listeners to prevent duplicates
+    socket.off("sync:tasks");
+    socket.off("task:create");
+    socket.off("task:update");
+    socket.off("task:delete");
+
     // Get all tasks
     socket.on("sync:tasks", (tasks) => {
       set({ tasks, isLoading: false });
@@ -30,16 +36,22 @@ export const useTaskStore = create<TaskStore>((set, _) => ({
 
     // Create task
     socket.on("task:create", (task) => {
-      set((state) => ({ tasks: [task, ...state.tasks] }));
+      set((state) => {
+        // Prevent duplicate tasks if the message is received multiple times
+        if (state.tasks.some((t) => t._id === task._id)) return state;
+        return { tasks: [task, ...state.tasks] };
+      });
     });
 
     // Update task
     socket.on("task:update", (updatedTask) => {
-      set((state) => ({ tasks: state.tasks.map((t) => (t._id === updatedTask._id ? updatedTask : t)) }));
+      set((state) => ({
+        tasks: state.tasks.map((t) => (t._id === updatedTask._id ? updatedTask : t)),
+      }));
     });
 
     // Delete task
-    socket.on("task:create", (id) => {
+    socket.on("task:delete", (id) => {
       set((state) => ({ tasks: state.tasks.filter((t) => t._id !== id) }));
     });
   },

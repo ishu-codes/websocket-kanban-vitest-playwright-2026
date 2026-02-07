@@ -40,7 +40,7 @@ export default function TaskCard({ task }: Props) {
             <CardTitle className="font-bold leading-tight">{task.title}</CardTitle>
             <div
               className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
             >
               <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setIsEditOpen(true)}>
                 <Edit className="h-3.5 w-3.5" />
