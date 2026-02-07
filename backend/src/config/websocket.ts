@@ -19,8 +19,10 @@ io.on("connection", async (socket) => {
   // Create Task
   socket.on("task:create", async (taskData) => {
     try {
-      const newTask = new Task(taskData);
+      const { title, description, status, priority, category, attachments } = taskData;
+      const newTask = new Task({ title, description, status, priority, category, attachments });
       await newTask.save();
+      // console.log(`New task created: ${title}`);
       io.emit("task:create", newTask);
     } catch (err) {
       console.error("Error creating task:", err);
@@ -32,6 +34,7 @@ io.on("connection", async (socket) => {
     try {
       const { _id, ...rest } = updatedData;
       const updatedTask = await Task.findByIdAndUpdate(_id, rest, { new: true });
+      // console.log(`Task updated: ${updatedData}`);
       io.emit("task:update", updatedTask);
     } catch (err) {
       console.error("Error updating task:", err);
@@ -42,6 +45,7 @@ io.on("connection", async (socket) => {
   socket.on("task:move", async ({ id, status }) => {
     try {
       const updatedTask = await Task.findByIdAndUpdate(id, { status }, { new: true });
+      // console.log(`Task moved with id ${id} to ${status}`);
       io.emit("task:update", updatedTask);
     } catch (err) {
       console.error("Error moving task:", err);
@@ -52,6 +56,7 @@ io.on("connection", async (socket) => {
   socket.on("task:delete", async (id) => {
     try {
       await Task.findByIdAndDelete(id);
+      // console.log(`Task deleted: ${id}`);
       io.emit("task:delete", id);
     } catch (err) {
       console.error("Error deleting task:", err);

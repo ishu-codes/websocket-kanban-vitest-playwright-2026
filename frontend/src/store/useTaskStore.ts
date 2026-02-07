@@ -25,16 +25,17 @@ export const useTaskStore = create<TaskStore>((set, _) => ({
     // Get all tasks
     socket.on("sync:tasks", (tasks) => {
       set({ tasks, isLoading: false });
+      console.log(tasks);
     });
 
     // Create task
     socket.on("task:create", (task) => {
-      set((state) => ({ tasks: [task, ...state] }));
+      set((state) => ({ tasks: [task, ...state.tasks] }));
     });
 
     // Update task
     socket.on("task:update", (updatedTask) => {
-      set((state) => state.tasks.map((t) => (t._id === updatedTask._id ? updatedTask : t)));
+      set((state) => ({ tasks: state.tasks.map((t) => (t._id === updatedTask._id ? updatedTask : t)) }));
     });
 
     // Delete task

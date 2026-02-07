@@ -1,10 +1,13 @@
 export type TaskStatus = "To Do" | "In Progress" | "Done";
+export type TaskPriority = "Low" | "Medium" | "High";
+export type TaskCategory = "Bug" | "Feature" | "Enhancement";
 
 export type Task = {
   _id: string;
   title: string;
-  description?: string;
+  description: string;
   status: TaskStatus;
-  createdAt?: string;
-  updatedAt?: string;
+  priority: TaskPriority;
+  category: TaskCategory;
+  attachments: (string | ArrayBuffer | null)[];
 };
