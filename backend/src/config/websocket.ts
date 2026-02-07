@@ -3,7 +3,10 @@ import { Server } from "socket.io";
 import { server } from "./server.js";
 import { Task } from "../models/task.model.js";
 
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: { origin: "*" },
+  maxHttpBufferSize: 1e7, // 10MB
+});
 
 io.on("connection", async (socket) => {
   console.log("A user connected", socket.id);

@@ -59,7 +59,7 @@ export default function TaskModal({ isOpen, onClose, task }: Props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (task) {
-      updateTask({ ...task, ...formData });
+      updateTask(formData);
     } else {
       createTask(formData);
     }
