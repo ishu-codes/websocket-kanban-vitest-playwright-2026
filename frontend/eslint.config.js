@@ -6,7 +6,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 export default [
   { ignores: ["dist", "src/tests"] },
   {
-    files: ["**/*.{js,jsx}"],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -24,10 +24,7 @@ export default [
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
   },
 ];

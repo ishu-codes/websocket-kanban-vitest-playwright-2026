@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { test, expect } from "vitest";
 
-import KanbanBoard from "../../src/components/KanbanBoard.jsx";
+import KanbanBoard from "../../components/KanbanBoard";
 
 test("renders Kanban board title", () => {
   render(<KanbanBoard />);

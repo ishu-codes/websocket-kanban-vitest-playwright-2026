@@ -1,6 +1,6 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 
 const app = express();
 const server = http.createServer(app);
@@ -16,4 +16,4 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () => console.log("Server running on port 5000"));
+server.listen(5000, () => console.log("Server running on http://localhost:5000"));

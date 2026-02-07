@@ -17,7 +17,7 @@ export default defineConfig({
     mockReset: true,
     globals: true,
     environment: "jsdom",
-    setupFiles: "./src/setupTests.js",
+    setupFiles: "./src/setupTests.ts",
     exclude: ["node_modules", "src/tests/e2e"],
   },
   plugins: [react()],
