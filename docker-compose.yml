@@ -1,5 +1,28 @@
 services:
-  db:
+  frontend:
+    container_name: websocket-kanban-frontend
+    build:
+      context: ./frontend/
+      args:
+        - VITE_WS_URL=http://localhost:5000
+    restart: unless-stopped
+    ports:
+      - "3000:80" # Map host 3000 to Nginx port 80
+
+  backend:
+    container_name: websocket-kanban-backend
+    build: ./backend/
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@database:27017/kanban?authSource=admin
+    ports:
+      - "5000:5000"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
     container_name: websocket-kanban-db
     image: mongo:8.2.2
     restart: unless-stopped
@@ -10,3 +33,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
     ports:
       - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

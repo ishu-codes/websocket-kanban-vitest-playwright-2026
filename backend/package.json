@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.2.4",
     "express": "^4.21.2",
     "mongoose": "^9.1.6",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@playwright/test": "^1.50.1",
     "@testing-library/react": "^16.2.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.2.1",
     "tsx": "^4.21.0",
