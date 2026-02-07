@@ -3,3 +3,9 @@ node_modules/
 
 # Env files
 .env
+
+# Build files
+build/
+
+# Test results
+test-results/
