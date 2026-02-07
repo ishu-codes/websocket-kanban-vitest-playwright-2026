@@ -1,14 +1,14 @@
-import React from 'react';
+import { useState, useEffect } from "react";
 
-function KanbanBoard() {
-    // TODO: Implement state and WebSocket logic
+const COLUMNS = ["To Do", "In Progress", "Done"];
 
-    return (
-        <div>
-            <h2>Kanban Board</h2>
-            {/* TODO: Implement task rendering and interactions */}
-        </div>
-    );
+export default function KanbanBoard() {
+  // TODO: Implement state and WebSocket logic
+
+  return (
+    <div>
+      <h2>Kanban Board</h2>
+      {/* TODO: Implement task rendering and interactions */}
+    </div>
+  );
 }
-
-export default KanbanBoard;
