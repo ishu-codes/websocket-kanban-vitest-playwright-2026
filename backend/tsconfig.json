@@ -4,7 +4,7 @@
     "moduleResolution": "bundler",
     "esModuleInterop": true,
 
-    "outDir": "./dist",
+    "outDir": "./public",
     "target": "es2020",
   },
 }
