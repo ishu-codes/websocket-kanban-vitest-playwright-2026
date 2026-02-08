@@ -1,10 +1,17 @@
 import { Server } from "socket.io";
 
-import { server } from "./server.js";
+import { server, corsOrigins } from "./server.js";
 import { Task } from "../models/task.model.js";
 
 const io = new Server(server, {
-  cors: { origin: "*" },
+  cors: {
+    origin: (origin, callback) => {
+      if (!corsOrigins || !origin || corsOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+  },
   maxHttpBufferSize: 1e7, // 10MB
 });
 

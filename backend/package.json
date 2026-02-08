@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node main.ts",
-    "dev": "tsx watch main.ts"
+    "start": "node src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "esbuild src/index.ts --bundle --platform=node --outdir=dist --format=esm --packages=external --external:fs --external:path --external:crypto --external:os --external:util --external:stream --external:buffer --external:events --external:url --external:querystring --external:http --external:https --external:net --external:tls --external:zlib"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.2.1",
+    "esbuild": "^0.27.3",
     "tsx": "^4.21.0",
     "vitest": "^3.0.7"
   }
